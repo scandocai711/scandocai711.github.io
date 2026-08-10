@@ -1,0 +1,486 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocScan AI — 撮るだけ自動整理スキャナ</title>
+<style>
+  :root {
+    --ink: #17202A;
+    --paper: #FBF9F4;
+    --accent: #1A73E8;
+    --accent-dark: #0B57D0;
+    --warm: #E8E4D8;
+    --soft: #F0EDE3;
+    --muted: #5F6368;
+    --line: #DDD8CA;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 6vw 64px;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(26,115,232,0.10), transparent 60%),
+      radial-gradient(900px 500px at -5% 110%, rgba(26,115,232,0.08), transparent 55%),
+      var(--paper);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(23,32,42,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  h1.hero-title {
+    font-size: clamp(34px, 6vw, 68px);
+    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    max-width: 16ch;
+  }
+  h1 .accent { color: var(--accent); }
+  .hero-sub {
+    margin-top: 22px;
+    font-size: clamp(16px, 2.2vw, 21px);
+    color: var(--muted);
+    max-width: 44ch;
+  }
+  .hero-cta {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 14px 26px;
+    font-size: 15px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(26,115,232,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(26,115,232,0.32); }
+  .btn-ghost { background: transparent; color: var(--accent-dark); border: 1.5px solid var(--accent); }
+  .btn-ghost:hover { background: rgba(26,115,232,0.06); }
+  .btn .play { font-size: 18px; }
+
+  .hero-mock {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    align-items: end;
+    max-width: 980px;
+  }
+  .shot {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 40px -18px rgba(23,32,42,0.35);
+    background: #fff;
+    transition: transform .2s ease;
+  }
+  .shot:hover { transform: translateY(-6px); }
+  .shot img { width: 100%; display: block; aspect-ratio: 9/19.5; object-fit: cover; }
+  .shot-1 { grid-column: span 1; }
+  .shot-2 { grid-column: span 1; margin-bottom: 6px; }
+  .shot-3 { grid-column: span 1; margin-bottom: 0; }
+  .shot-4 { grid-column: span 1; margin-bottom: 10px; }
+  .shot-5 { grid-column: span 1; margin-bottom: 14px; }
+
+  /* ---------- Section base ---------- */
+  section { padding: 84px 6vw; }
+  .section-head { max-width: 760px; margin-bottom: 44px; }
+  .kicker {
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .lead { margin-top: 16px; color: var(--muted); font-size: 16px; }
+
+  /* ---------- Message / AI ---------- */
+  .message {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .message .kicker { color: #8AB4F8; }
+  .message .lead { color: #DADCE0; }
+  .message-statement {
+    font-size: clamp(22px, 3.4vw, 34px);
+    font-weight: 800;
+    line-height: 1.4;
+    max-width: 22ch;
+    margin: 8px 0 20px;
+  }
+  .message-statement .hl {
+    color: #8AB4F8;
+    border-bottom: 3px solid rgba(138,180,248,0.5);
+  }
+  .scenario-grid {
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+  }
+  .scenario {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .scenario .emoji { font-size: 28px; }
+  .scenario h3 { font-size: 17px; margin: 12px 0 8px; }
+  .scenario p { font-size: 14px; color: #DADCE0; }
+
+  /* ---------- Features ---------- */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .feature {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .feature:hover { transform: translateY(-4px); box-shadow: 0 16px 36px -18px rgba(23,32,42,0.25); }
+  .feature .icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 22px;
+    background: var(--soft);
+    margin-bottom: 16px;
+  }
+  .feature h3 { font-size: 18px; margin-bottom: 8px; }
+  .feature p { font-size: 14px; color: var(--muted); }
+  .feature.ai .icon { background: var(--accent); color: #fff; }
+  .feature.ai { border-color: rgba(26,115,232,0.4); }
+
+  /* ---------- Showcase ---------- */
+  .showcase { background: var(--soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    align-items: start;
+  }
+  .showcase-item .frame {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 0 14px 34px -18px rgba(23,32,42,0.3);
+  }
+  .showcase-item img { width: 100%; display: block; }
+  .showcase-item .cap { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
+
+  /* ---------- Steps ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    counter-reset: step;
+  }
+  .step {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px 24px 22px;
+  }
+  .step::before {
+    counter-increment: step;
+    content: "0" counter(step);
+    position: absolute;
+    top: 18px; right: 20px;
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--warm);
+  }
+  .step h3 { font-size: 18px; margin-bottom: 8px; }
+  .step p { font-size: 14px; color: var(--muted); }
+
+  /* ---------- Pro ---------- */
+  .pro {
+    background: linear-gradient(135deg, #0B57D0, #1A73E8);
+    color: #fff;
+  }
+  .pro .kicker { color: #C6DAFC; }
+  .pro .lead { color: #E8F0FE; }
+  .pro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .pro-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .pro-card .mark { font-size: 22px; }
+  .pro-card h3 { font-size: 17px; margin: 10px 0 6px; }
+  .pro-card p { font-size: 13.5px; color: #E8F0FE; }
+  .pro-price {
+    margin-top: 34px;
+    font-size: 20px;
+    font-weight: 800;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .pro-price .tag {
+    background: #fff; color: #0B57D0;
+    padding: 6px 14px; border-radius: 999px;
+    font-size: 14px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 36px 6vw;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--line);
+  }
+  footer .note { margin-top: 8px; font-size: 12px; color: #9aa0a6; }
+
+  @media (max-width: 760px) {
+    .hero-mock { grid-template-columns: repeat(3, 1fr); }
+    .shot-4, .shot-5 { display: none; }
+    section { padding: 56px 6vw; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="badge">📷 撮るだけ自動整理スキャナ</span>
+      <h1 class="hero-title">捨てる前に、<br>さっと撮る。<br><span class="accent">AIがきれいに整理。</span></h1>
+      <p class="hero-sub">学校のお知らせ、仕事の書類、役所からの通知。紙を溜める代わりに、撮って保存するだけ。AIがファイル名と保存先を自動で整理します。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.docscanai"><span class="play">▶</span> Google Play で入手</a>
+        <a class="btn btn-ghost" href="#features">機能を見る</a>
+      </div>
+      <div class="hero-mock">
+        <div class="shot shot-1"><img src="screenshots/01_home.png" alt="メイン画面"></div>
+        <div class="shot shot-2"><img src="screenshots/03_preview.png" alt="書類プレビュー"></div>
+        <div class="shot shot-3"><img src="screenshots/04_ai_save.png" alt="AI保存ダイアログ"></div>
+        <div class="shot shot-4"><img src="screenshots/05_doclist.png" alt="ドキュメント一覧"></div>
+        <div class="shot shot-5"><img src="screenshots/06_settings.png" alt="AI設定"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MESSAGE ============ -->
+  <section class="message">
+    <div class="section-head">
+      <div class="kicker">The AI is not about beauty</div>
+      <h2>AIの本当の価値は「きれいなPDF」だけではなく<br>「どこに何を保存するか、もう迷わない」こと。</h2>
+      <p class="lead">DocScanAIは、日常でもらう書類を「捨てる前」にそっと残すためのアプリです。</p>
+    </div>
+
+    <div class="scenario-grid">
+      <div class="scenario">
+        <div class="emoji">🏫</div>
+        <h3>学校のお知らせ</h3>
+        <p>配られたプリントを撮れば、AIが「学校 / お知らせ」フォルダへ整理。</p>
+      </div>
+      <div class="scenario">
+        <div class="emoji">💼</div>
+        <h3>仕事の書類</h3>
+        <p>領収書・請求書・契約書。ファイル名に日付と内容を自動で付けて保存。</p>
+      </div>
+      <div class="scenario">
+        <div class="emoji">🏛️</div>
+        <h3>公的機関の書類</h3>
+        <p>役所の通知や証明書も、捨てずに「公共書類」へ。必要なときにすぐ探せる。</p>
+      </div>
+      <div class="scenario">
+        <div class="emoji">🧹</div>
+        <h3>机がスッキリ</h3>
+        <p>紙は捨てても、中身はスマホに残る。心も机も軽くなる。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features">
+    <div class="section-head">
+      <div class="kicker">Features</div>
+      <h2>できること</h2>
+      <p class="lead">スキャン → AI整理 → 必要なときにすぐ取り出す。それだけです。</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature ai">
+        <div class="icon">🤖</div>
+        <h3>AI自動整理</h3>
+        <p>書類を読み取り、分かりやすいファイル名（日付・種類・タイトル）と保存先フォルダを自動提案。もう「IMG_0001.pdf」の散らかりは不要。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📸</div>
+        <h3>数秒でスキャン</h3>
+        <p>カメラで撮るだけで、きれいでまっすぐなPDFに。複数ページもOK。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🖼️</div>
+        <h3>どこからでも取り込み</h3>
+        <p>ギャラリーの写真も、すでにあるPDFもそのまま読み込み。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔀</div>
+        <h3>ページ編集</h3>
+        <p>並べ替え・撮り直し・挿入。保存する前に整えられます。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔍</div>
+        <h3>すぐ探せる一覧</h3>
+        <p>AIが分類したフォルダ構造で、必要な書類をすぐに見つけられます。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <h3>端末に残るプライバシー</h3>
+        <p>スキャンは端末の中。AI分析は自分で選んだプロバイダを使い、設定で管理。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SHOWCASE ============ -->
+  <section class="showcase">
+    <div class="section-head">
+      <div class="kicker">Screens</div>
+      <h2>アプリの使い方</h2>
+      <p class="lead">撮って、AIが提案した名前と保存先を確認して、保存。それだけ。</p>
+    </div>
+    <div class="showcase-grid">
+      <div class="showcase-item">
+        <div class="frame"><img src="screenshots/01_home.png" alt="メイン画面"></div>
+        <div class="cap">撮影 / ギャラリー / PDF読み込み</div>
+      </div>
+      <div class="showcase-item">
+        <div class="frame"><img src="screenshots/03_preview.png" alt="書類プレビュー"></div>
+        <div class="cap">複数ページの確認と編集</div>
+      </div>
+      <div class="showcase-item">
+        <div class="frame"><img src="screenshots/04_ai_save.png" alt="AI保存"></div>
+        <div class="cap">AIがファイル名と保存先を提案</div>
+      </div>
+      <div class="showcase-item">
+        <div class="frame"><img src="screenshots/05_doclist.png" alt="ドキュメント一覧"></div>
+        <div class="cap">AI分類されたドキュメント一覧</div>
+      </div>
+      <div class="showcase-item">
+        <div class="frame"><img src="screenshots/06_settings.png" alt="AI設定"></div>
+        <div class="cap">AI設定はすべてコントロール可能</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEPS ============ -->
+  <section>
+    <div class="section-head">
+      <div class="kicker">How it works</div>
+      <h2>3ステップで書類を整理</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>撮る</h3>
+        <p>カメラで書類を撮影。あるいはギャラリー・PDFから読み込み。</p>
+      </div>
+      <div class="step">
+        <h3>AIが整理</h3>
+        <p>AIが書類を読み、ファイル名と保存先フォルダを自動提案。</p>
+      </div>
+      <div class="step">
+        <h3>保存</h3>
+        <p>確認して保存。紙は捨てても、必要なときにすぐ取り出せる。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRO ============ -->
+  <section class="pro">
+    <div class="section-head">
+      <div class="kicker">DocScanAI Pro</div>
+      <h2>買い切りで、もっと快適に。</h2>
+      <p class="lead">サブスクなし。1回の購入でずっと使い続けられます。</p>
+    </div>
+    <div class="pro-grid">
+      <div class="pro-card">
+        <div class="mark">🤖</div>
+        <h3>AI自動整理</h3>
+        <p>ファイル名生成・フォルダ分類をAIにおまかせ。</p>
+      </div>
+      <div class="pro-card">
+        <div class="mark">🔤</div>
+        <h3>高精度OCR</h3>
+        <p>AIによる高精度な文字認識で、書類を正確に読み取ります。</p>
+      </div>
+      <div class="pro-card">
+        <div class="mark">🚫</div>
+        <h3>広告なし・透かしなし</h3>
+        <p>スキャン中の広告とPDFの透かしをすべて除去。</p>
+      </div>
+    </div>
+    <div class="pro-price">
+      1回限りのお支払い
+      <span class="tag">¥500</span>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <p>DocScan AI — 撮るだけ自動整理スキャナ</p>
+    <p class="note">画面はイメージです。実際の表示と異なる場合があります。</p>
+  </footer>
+
+</body>
+</html>
