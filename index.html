@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DocScan AI — 撮るだけ自動整理スキャナ</title>
+<title>DocScan AI — 撮るだけ自動整理スキャナ / Snap & Auto-Filing Scanner</title>
+<meta name="description" content="書類・PDFスキャナー。捨てる前に撮るだけ。AIがファイル名と保存先を自動整理。 / PDF & document scanner with AI auto-filing.">
+<meta property="og:title" content="DocScan AI — 撮るだけ自動整理スキャナ">
+<meta property="og:description" content="捨てる前に、さっと撮る。AIがきれいに整理。 / Before you toss it, just snap it. AI sorts it beautifully.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://scandocai711.github.io/">
+<link rel="alternate" hreflang="ja" href="https://scandocai711.github.io/?lang=ja">
+<link rel="alternate" hreflang="en" href="https://scandocai711.github.io/?lang=en">
 <style>
   :root {
     --ink: #17202A;
@@ -18,14 +25,27 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--paper);
     color: var(--ink);
     line-height: 1.7;
     overflow-x: hidden;
   }
-
-  /* ---------- Hero ---------- */
+  .langbar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; justify-content: flex-end;
+    padding: 10px 6vw;
+    background: rgba(251,249,244,0.9);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .langbar button {
+    font-weight: 700; font-size: 13px;
+    border: 1.5px solid var(--accent); border-radius: 999px;
+    background: transparent; color: var(--accent-dark);
+    padding: 6px 14px; margin-left: 8px; cursor: pointer;
+  }
+  .langbar button.active { background: var(--accent); color: #fff; }
   .hero {
     position: relative;
     min-height: 92vh;
@@ -64,10 +84,10 @@
   }
   h1.hero-title {
     font-size: clamp(34px, 6vw, 68px);
-    line-height: 1.12;
+    line-height: 1.35;
     font-weight: 800;
     letter-spacing: -0.01em;
-    max-width: 16ch;
+    max-width: 20ch;
   }
   h1 .accent { color: var(--accent); }
   .hero-sub {
@@ -102,8 +122,6 @@
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(26,115,232,0.32); }
   .btn-ghost { background: transparent; color: var(--accent-dark); border: 1.5px solid var(--accent); }
   .btn-ghost:hover { background: rgba(26,115,232,0.06); }
-  .btn .play { font-size: 18px; }
-
   .hero-mock {
     margin-top: 56px;
     display: grid;
@@ -122,13 +140,6 @@
   }
   .shot:hover { transform: translateY(-6px); }
   .shot img { width: 100%; display: block; aspect-ratio: 9/19.5; object-fit: cover; }
-  .shot-1 { grid-column: span 1; }
-  .shot-2 { grid-column: span 1; margin-bottom: 6px; }
-  .shot-3 { grid-column: span 1; margin-bottom: 0; }
-  .shot-4 { grid-column: span 1; margin-bottom: 10px; }
-  .shot-5 { grid-column: span 1; margin-bottom: 14px; }
-
-  /* ---------- Section base ---------- */
   section { padding: 84px 6vw; }
   .section-head { max-width: 760px; margin-bottom: 44px; }
   .kicker {
@@ -142,29 +153,13 @@
   h2 {
     font-size: clamp(26px, 4vw, 40px);
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.4;
     letter-spacing: -0.01em;
   }
   .lead { margin-top: 16px; color: var(--muted); font-size: 16px; }
-
-  /* ---------- Message / AI ---------- */
-  .message {
-    background: var(--ink);
-    color: var(--paper);
-  }
+  .message { background: var(--ink); color: var(--paper); }
   .message .kicker { color: #8AB4F8; }
   .message .lead { color: #DADCE0; }
-  .message-statement {
-    font-size: clamp(22px, 3.4vw, 34px);
-    font-weight: 800;
-    line-height: 1.4;
-    max-width: 22ch;
-    margin: 8px 0 20px;
-  }
-  .message-statement .hl {
-    color: #8AB4F8;
-    border-bottom: 3px solid rgba(138,180,248,0.5);
-  }
   .scenario-grid {
     margin-top: 44px;
     display: grid;
@@ -180,8 +175,6 @@
   .scenario .emoji { font-size: 28px; }
   .scenario h3 { font-size: 17px; margin: 12px 0 8px; }
   .scenario p { font-size: 14px; color: #DADCE0; }
-
-  /* ---------- Features ---------- */
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -207,8 +200,6 @@
   .feature p { font-size: 14px; color: var(--muted); }
   .feature.ai .icon { background: var(--accent); color: #fff; }
   .feature.ai { border-color: rgba(26,115,232,0.4); }
-
-  /* ---------- Showcase ---------- */
   .showcase { background: var(--soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .showcase-grid {
     display: grid;
@@ -225,8 +216,6 @@
   }
   .showcase-item img { width: 100%; display: block; }
   .showcase-item .cap { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
-
-  /* ---------- Steps ---------- */
   .steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -251,8 +240,6 @@
   }
   .step h3 { font-size: 18px; margin-bottom: 8px; }
   .step p { font-size: 14px; color: var(--muted); }
-
-  /* ---------- Pro ---------- */
   .pro {
     background: linear-gradient(135deg, #0B57D0, #1A73E8);
     color: #fff;
@@ -280,8 +267,6 @@
     padding: 6px 14px; border-radius: 999px;
     font-size: 14px;
   }
-
-  /* ---------- Footer ---------- */
   footer {
     padding: 36px 6vw;
     text-align: center;
@@ -289,8 +274,9 @@
     font-size: 13px;
     border-top: 1px solid var(--line);
   }
+  footer .links { margin-top: 12px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  footer .links a { color: var(--accent-dark); text-decoration: none; font-weight: 700; }
   footer .note { margin-top: 8px; font-size: 12px; color: #9aa0a6; }
-
   @media (max-width: 760px) {
     .hero-mock { grid-template-columns: repeat(3, 1fr); }
     .shot-4, .shot-5 { display: none; }
@@ -300,187 +286,345 @@
 </head>
 <body>
 
-  <!-- ============ HERO ============ -->
-  <header class="hero">
-    <div class="hero-inner">
-      <span class="badge">📷 撮るだけ自動整理スキャナ</span>
-      <h1 class="hero-title">捨てる前に、<br>さっと撮る。<br><span class="accent">AIがきれいに整理。</span></h1>
-      <p class="hero-sub">学校のお知らせ、仕事の書類、役所からの通知。紙を溜める代わりに、撮って保存するだけ。AIがファイル名と保存先を自動で整理します。</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.docscanai"><span class="play">▶</span> Google Play で入手</a>
-        <a class="btn btn-ghost" href="#features">機能を見る</a>
-      </div>
-      <div class="hero-mock">
-        <div class="shot shot-1"><img src="screenshots/01_home.png" alt="メイン画面"></div>
-        <div class="shot shot-2"><img src="screenshots/03_preview.png" alt="書類プレビュー"></div>
-        <div class="shot shot-3"><img src="screenshots/04_ai_save.png" alt="AI保存ダイアログ"></div>
-        <div class="shot shot-4"><img src="screenshots/05_doclist.png" alt="ドキュメント一覧"></div>
-        <div class="shot shot-5"><img src="screenshots/06_settings.png" alt="AI設定"></div>
-      </div>
-    </div>
-  </header>
+<div class="langbar" role="navigation" aria-label="Language">
+  <button id="btn-ja" type="button">日本語</button>
+  <button id="btn-en" type="button">English</button>
+</div>
 
-  <!-- ============ MESSAGE ============ -->
-  <section class="message">
-    <div class="section-head">
-      <div class="kicker">The AI is not about beauty</div>
-      <h2>AIの本当の価値は「きれいなPDF」だけではなく<br>「どこに何を保存するか、もう迷わない」こと。</h2>
-      <p class="lead">DocScanAIは、日常でもらう書類を「捨てる前」にそっと残すためのアプリです。</p>
+<header class="hero">
+  <div class="hero-inner">
+    <span class="badge" data-i18n="badge">📷 撮るだけ自動整理スキャナ</span>
+    <h1 class="hero-title" data-i18n-html="hero.title">捨てる前に、<br>さっと撮る。<br><span class="accent">AIがきれいに整理。</span></h1>
+    <p class="hero-sub" data-i18n="hero.sub">学校のお知らせ、仕事の書類、役所からの通知。紙を溜める代わりに、撮って保存するだけ。AIがファイル名と保存先を自動で整理します。</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.docscanai"><span data-i18n="hero.cta">▶ Google Play で入手</span></a>
+      <a class="btn btn-ghost" href="#features" data-i18n="hero.more">機能を見る</a>
     </div>
+    <div class="hero-mock">
+      <div class="shot shot-1"><img data-img="shot1" src="screenshots/01_home.png" alt="メイン画面"></div>
+      <div class="shot shot-2"><img data-img="shot2" src="screenshots/03_preview.png" alt="書類プレビュー"></div>
+      <div class="shot shot-3"><img data-img="shot3" src="screenshots/04_ai_save.png" alt="AI保存ダイアログ"></div>
+      <div class="shot shot-4"><img data-img="shot4" src="screenshots/05_doclist.png" alt="ドキュメント一覧"></div>
+      <div class="shot shot-5"><img data-img="shot5" src="screenshots/06_settings.png" alt="AI設定"></div>
+    </div>
+  </div>
+</header>
 
-    <div class="scenario-grid">
-      <div class="scenario">
-        <div class="emoji">🏫</div>
-        <h3>学校のお知らせ</h3>
-        <p>配られたプリントを撮れば、AIが「学校 / お知らせ」フォルダへ整理。</p>
-      </div>
-      <div class="scenario">
-        <div class="emoji">💼</div>
-        <h3>仕事の書類</h3>
-        <p>領収書・請求書・契約書。ファイル名に日付と内容を自動で付けて保存。</p>
-      </div>
-      <div class="scenario">
-        <div class="emoji">🏛️</div>
-        <h3>公的機関の書類</h3>
-        <p>役所の通知や証明書も、捨てずに「公共書類」へ。必要なときにすぐ探せる。</p>
-      </div>
-      <div class="scenario">
-        <div class="emoji">🧹</div>
-        <h3>机がスッキリ</h3>
-        <p>紙は捨てても、中身はスマホに残る。心も机も軽くなる。</p>
-      </div>
+<section class="message">
+  <div class="section-head">
+    <div class="kicker" data-i18n="msg.kicker">The AI is not about beauty</div>
+    <h2 data-i18n-html="msg.title">AIの本当の価値は「きれいなPDF」だけではなく<br>「どこに何を保存するか、もう迷わない」こと。</h2>
+    <p class="lead" data-i18n="msg.lead">DocScanAIは、日常でもらう書類を「捨てる前」にそっと残すためのアプリです。</p>
+  </div>
+  <div class="scenario-grid">
+    <div class="scenario">
+      <div class="emoji" data-i18n="sc1.emoji">🏫</div>
+      <h3 data-i18n="sc1.h">学校のお知らせ</h3>
+      <p data-i18n="sc1.p">配られたプリントを撮れば、AIが「学校 / お知らせ」フォルダへ整理。</p>
     </div>
-  </section>
+    <div class="scenario">
+      <div class="emoji" data-i18n="sc2.emoji">💼</div>
+      <h3 data-i18n="sc2.h">仕事の書類</h3>
+      <p data-i18n="sc2.p">領収書・請求書・契約書。ファイル名に日付と内容を自動で付けて保存。</p>
+    </div>
+    <div class="scenario">
+      <div class="emoji" data-i18n="sc3.emoji">🏛️</div>
+      <h3 data-i18n="sc3.h">公的機関の書類</h3>
+      <p data-i18n="sc3.p">役所の通知や証明書も、捨てずに「公共書類」へ。必要なときにすぐ探せる。</p>
+    </div>
+    <div class="scenario">
+      <div class="emoji" data-i18n="sc4.emoji">🧹</div>
+      <h3 data-i18n="sc4.h">机がスッキリ</h3>
+      <p data-i18n="sc4.p">紙は捨てても、中身はスマホに残る。心も机も軽くなる。</p>
+    </div>
+  </div>
+</section>
 
-  <!-- ============ FEATURES ============ -->
-  <section id="features">
-    <div class="section-head">
-      <div class="kicker">Features</div>
-      <h2>できること</h2>
-      <p class="lead">スキャン → AI整理 → 必要なときにすぐ取り出す。それだけです。</p>
+<section id="features">
+  <div class="section-head">
+    <div class="kicker">Features</div>
+    <h2 data-i18n="feat.title">できること</h2>
+    <p class="lead" data-i18n="feat.lead">スキャン → AI整理 → 必要なときにすぐ取り出す。それだけです。</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature ai">
+      <div class="icon">🤖</div>
+      <h3 data-i18n="f1.h">AI自動整理</h3>
+      <p data-i18n="f1.p">書類を読み取り、分かりやすいファイル名（日付・種類・タイトル）と保存先フォルダを自動提案。もう「IMG_0001.pdf」の散らかりは不要。</p>
     </div>
-    <div class="features-grid">
-      <div class="feature ai">
-        <div class="icon">🤖</div>
-        <h3>AI自動整理</h3>
-        <p>書類を読み取り、分かりやすいファイル名（日付・種類・タイトル）と保存先フォルダを自動提案。もう「IMG_0001.pdf」の散らかりは不要。</p>
-      </div>
-      <div class="feature">
-        <div class="icon">📸</div>
-        <h3>数秒でスキャン</h3>
-        <p>カメラで撮るだけで、きれいでまっすぐなPDFに。複数ページもOK。</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🖼️</div>
-        <h3>どこからでも取り込み</h3>
-        <p>ギャラリーの写真も、すでにあるPDFもそのまま読み込み。</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🔀</div>
-        <h3>ページ編集</h3>
-        <p>並べ替え・撮り直し・挿入。保存する前に整えられます。</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🔍</div>
-        <h3>すぐ探せる一覧</h3>
-        <p>AIが分類したフォルダ構造で、必要な書類をすぐに見つけられます。</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🔒</div>
-        <h3>端末に残るプライバシー</h3>
-        <p>スキャンは端末の中。AI分析は自分で選んだプロバイダを使い、設定で管理。</p>
-      </div>
+    <div class="feature">
+      <div class="icon">📸</div>
+      <h3 data-i18n="f2.h">数秒でスキャン</h3>
+      <p data-i18n="f2.p">カメラで撮るだけで、きれいでまっすぐなPDFに。複数ページもOK。</p>
     </div>
-  </section>
+    <div class="feature">
+      <div class="icon">🖼️</div>
+      <h3 data-i18n="f3.h">どこからでも取り込み</h3>
+      <p data-i18n="f3.p">ギャラリーの写真も、すでにあるPDFもそのまま読み込み。</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔀</div>
+      <h3 data-i18n="f4.h">ページ編集</h3>
+      <p data-i18n="f4.p">並べ替え・撮り直し・挿入。保存する前に整えられます。</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔍</div>
+      <h3 data-i18n="f5.h">すぐ探せる一覧</h3>
+      <p data-i18n="f5.p">AIが分類したフォルダ構造で、必要な書類をすぐに見つけられます。</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔒</div>
+      <h3 data-i18n="f6.h">端末に残るプライバシー</h3>
+      <p data-i18n="f6.p">スキャンは端末の中。AI分析は自分で選んだプロバイダを使い、設定で管理。</p>
+    </div>
+  </div>
+</section>
 
-  <!-- ============ SHOWCASE ============ -->
-  <section class="showcase">
-    <div class="section-head">
-      <div class="kicker">Screens</div>
-      <h2>アプリの使い方</h2>
-      <p class="lead">撮って、AIが提案した名前と保存先を確認して、保存。それだけ。</p>
+<section class="showcase">
+  <div class="section-head">
+    <div class="kicker">Screens</div>
+    <h2 data-i18n="show.title">アプリの使い方</h2>
+    <p class="lead" data-i18n="show.lead">撮って、AIが提案した名前と保存先を確認して、保存。それだけ。</p>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-item">
+      <div class="frame"><img data-img="shot1" src="screenshots/01_home.png" alt="メイン画面"></div>
+      <div class="cap" data-i18n="cap1">撮影 / ギャラリー / PDF読み込み</div>
     </div>
-    <div class="showcase-grid">
-      <div class="showcase-item">
-        <div class="frame"><img src="screenshots/01_home.png" alt="メイン画面"></div>
-        <div class="cap">撮影 / ギャラリー / PDF読み込み</div>
-      </div>
-      <div class="showcase-item">
-        <div class="frame"><img src="screenshots/03_preview.png" alt="書類プレビュー"></div>
-        <div class="cap">複数ページの確認と編集</div>
-      </div>
-      <div class="showcase-item">
-        <div class="frame"><img src="screenshots/04_ai_save.png" alt="AI保存"></div>
-        <div class="cap">AIがファイル名と保存先を提案</div>
-      </div>
-      <div class="showcase-item">
-        <div class="frame"><img src="screenshots/05_doclist.png" alt="ドキュメント一覧"></div>
-        <div class="cap">AI分類されたドキュメント一覧</div>
-      </div>
-      <div class="showcase-item">
-        <div class="frame"><img src="screenshots/06_settings.png" alt="AI設定"></div>
-        <div class="cap">AI設定はすべてコントロール可能</div>
-      </div>
+    <div class="showcase-item">
+      <div class="frame"><img data-img="shot2" src="screenshots/03_preview.png" alt="書類プレビュー"></div>
+      <div class="cap" data-i18n="cap2">複数ページの確認と編集</div>
     </div>
-  </section>
+    <div class="showcase-item">
+      <div class="frame"><img data-img="shot3" src="screenshots/04_ai_save.png" alt="AI保存"></div>
+      <div class="cap" data-i18n="cap3">AIがファイル名と保存先を提案</div>
+    </div>
+    <div class="showcase-item">
+      <div class="frame"><img data-img="shot4" src="screenshots/05_doclist.png" alt="ドキュメント一覧"></div>
+      <div class="cap" data-i18n="cap4">AI分類されたドキュメント一覧</div>
+    </div>
+    <div class="showcase-item">
+      <div class="frame"><img data-img="shot5" src="screenshots/06_settings.png" alt="AI設定"></div>
+      <div class="cap" data-i18n="cap5">AI設定はすべてコントロール可能</div>
+    </div>
+  </div>
+</section>
 
-  <!-- ============ STEPS ============ -->
-  <section>
-    <div class="section-head">
-      <div class="kicker">How it works</div>
-      <h2>3ステップで書類を整理</h2>
+<section>
+  <div class="section-head">
+    <div class="kicker">How it works</div>
+    <h2 data-i18n="steps.title">3ステップで書類を整理</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <h3 data-i18n="st1.h">撮る</h3>
+      <p data-i18n="st1.p">カメラで書類を撮影。あるいはギャラリー・PDFから読み込み。</p>
     </div>
-    <div class="steps">
-      <div class="step">
-        <h3>撮る</h3>
-        <p>カメラで書類を撮影。あるいはギャラリー・PDFから読み込み。</p>
-      </div>
-      <div class="step">
-        <h3>AIが整理</h3>
-        <p>AIが書類を読み、ファイル名と保存先フォルダを自動提案。</p>
-      </div>
-      <div class="step">
-        <h3>保存</h3>
-        <p>確認して保存。紙は捨てても、必要なときにすぐ取り出せる。</p>
-      </div>
+    <div class="step">
+      <h3 data-i18n="st2.h">AIが整理</h3>
+      <p data-i18n="st2.p">AIが書類を読み、ファイル名と保存先フォルダを自動提案。</p>
     </div>
-  </section>
+    <div class="step">
+      <h3 data-i18n="st3.h">保存</h3>
+      <p data-i18n="st3.p">確認して保存。紙は捨てても、必要なときにすぐ取り出せる。</p>
+    </div>
+  </div>
+</section>
 
-  <!-- ============ PRO ============ -->
-  <section class="pro">
-    <div class="section-head">
-      <div class="kicker">DocScanAI Pro</div>
-      <h2>買い切りで、もっと快適に。</h2>
-      <p class="lead">サブスクなし。1回の購入でずっと使い続けられます。</p>
+<section class="pro">
+  <div class="section-head">
+    <div class="kicker">DocScanAI Pro</div>
+    <h2 data-i18n="pro.title">買い切りで、もっと快適に。</h2>
+    <p class="lead" data-i18n="pro.lead">サブスクなし。1回の購入でずっと使い続けられます。</p>
+  </div>
+  <div class="pro-grid">
+    <div class="pro-card">
+      <div class="mark">🤖</div>
+      <h3 data-i18n="p1.h">AI自動整理</h3>
+      <p data-i18n="p1.p">ファイル名生成・フォルダ分類をAIにおまかせ。</p>
     </div>
-    <div class="pro-grid">
-      <div class="pro-card">
-        <div class="mark">🤖</div>
-        <h3>AI自動整理</h3>
-        <p>ファイル名生成・フォルダ分類をAIにおまかせ。</p>
-      </div>
-      <div class="pro-card">
-        <div class="mark">🔤</div>
-        <h3>高精度OCR</h3>
-        <p>AIによる高精度な文字認識で、書類を正確に読み取ります。</p>
-      </div>
-      <div class="pro-card">
-        <div class="mark">🚫</div>
-        <h3>広告なし・透かしなし</h3>
-        <p>スキャン中の広告とPDFの透かしをすべて除去。</p>
-      </div>
+    <div class="pro-card">
+      <div class="mark">🔤</div>
+      <h3 data-i18n="p2.h">高精度OCR</h3>
+      <p data-i18n="p2.p">AIによる高精度な文字認識で、書類を正確に読み取ります。</p>
     </div>
-    <div class="pro-price">
-      1回限りのお支払い
-      <span class="tag">¥500</span>
+    <div class="pro-card">
+      <div class="mark">📄</div>
+      <h3 data-i18n="p3.h">透かしなしPDF</h3>
+      <p data-i18n="p3.p">Proで保存したPDFの透かしを除去。アプリ自体に広告はありません。</p>
     </div>
-  </section>
+  </div>
+  <div class="pro-price">
+    <span data-i18n="pro.price">価格はストア表示（買い切り）</span>
+    <span class="tag" data-i18n="pro.tag">サブスクなし</span>
+  </div>
+</section>
 
-  <!-- ============ FOOTER ============ -->
-  <footer>
-    <p>DocScan AI — 撮るだけ自動整理スキャナ</p>
-    <p class="note">画面はイメージです。実際の表示と異なる場合があります。</p>
-  </footer>
+<footer>
+  <p data-i18n="foot.name">DocScan AI — 撮るだけ自動整理スキャナ</p>
+  <div class="links">
+    <a href="https://play.google.com/store/apps/details?id=com.docscanai">Google Play</a>
+    <a href="https://github.com/scandocai711">GitHub</a>
+    <a href="privacy.html" data-i18n="foot.privacy">プライバシーポリシー</a>
+  </div>
+  <p class="note" data-i18n="foot.note">画面はイメージです。実際の表示と異なる場合があります。</p>
+</footer>
+
+<script>
+(function () {
+  var I18N = {
+    ja: {
+      "badge": "📷 撮るだけ自動整理スキャナ",
+      "hero.title": "捨てる前に、<br>さっと撮る。<br><span class=\"accent\">AIがきれいに整理。</span>",
+      "hero.sub": "学校のお知らせ、仕事の書類、役所からの通知。紙を溜める代わりに、撮って保存するだけ。AIがファイル名と保存先を自動で整理します。",
+      "hero.cta": "▶ Google Play で入手",
+      "hero.more": "機能を見る",
+      "msg.kicker": "The AI is not about beauty",
+      "msg.title": "AIの本当の価値は「きれいなPDF」だけではなく<br>「どこに何を保存するか、もう迷わない」こと。",
+      "msg.lead": "DocScanAIは、日常でもらう書類を「捨てる前」にそっと残すためのアプリです。",
+      "sc1.emoji": "🏫", "sc1.h": "学校のお知らせ", "sc1.p": "配られたプリントを撮れば、AIが「学校 / お知らせ」フォルダへ整理。",
+      "sc2.emoji": "💼", "sc2.h": "仕事の書類", "sc2.p": "領収書・請求書・契約書。ファイル名に日付と内容を自動で付けて保存。",
+      "sc3.emoji": "🏛️", "sc3.h": "公的機関の書類", "sc3.p": "役所の通知や証明書も、捨てずに「公共書類」へ。必要なときにすぐ探せる。",
+      "sc4.emoji": "🧹", "sc4.h": "机がスッキリ", "sc4.p": "紙は捨てても、中身はスマホに残る。心も机も軽くなる。",
+      "feat.title": "できること",
+      "feat.lead": "スキャン → AI整理 → 必要なときにすぐ取り出す。それだけです。",
+      "f1.h": "AI自動整理", "f1.p": "書類を読み取り、分かりやすいファイル名（日付・種類・タイトル）と保存先フォルダを自動提案。もう「IMG_0001.pdf」の散らかりは不要。",
+      "f2.h": "数秒でスキャン", "f2.p": "カメラで撮るだけで、きれいでまっすぐなPDFに。複数ページもOK。",
+      "f3.h": "どこからでも取り込み", "f3.p": "ギャラリーの写真も、すでにあるPDFもそのまま読み込み。",
+      "f4.h": "ページ編集", "f4.p": "並べ替え・撮り直し・挿入。保存する前に整えられます。",
+      "f5.h": "すぐ探せる一覧", "f5.p": "AIが分類したフォルダ構造で、必要な書類をすぐに見つけられます。",
+      "f6.h": "端末に残るプライバシー", "f6.p": "スキャンは端末の中。AI分析は自分で選んだプロバイダを使い、設定で管理。",
+      "show.title": "アプリの使い方",
+      "show.lead": "撮って、AIが提案した名前と保存先を確認して、保存。それだけ。",
+      "cap1": "撮影 / ギャラリー / PDF読み込み",
+      "cap2": "複数ページの確認と編集",
+      "cap3": "AIがファイル名と保存先を提案",
+      "cap4": "AI分類されたドキュメント一覧",
+      "cap5": "AI設定はすべてコントロール可能",
+      "steps.title": "3ステップで書類を整理",
+      "st1.h": "撮る", "st1.p": "カメラで書類を撮影。あるいはギャラリー・PDFから読み込み。",
+      "st2.h": "AIが整理", "st2.p": "AIが書類を読み、ファイル名と保存先フォルダを自動提案。",
+      "st3.h": "保存", "st3.p": "確認して保存。紙は捨てても、必要なときにすぐ取り出せる。",
+      "pro.title": "買い切りで、もっと快適に。",
+      "pro.lead": "サブスクなし。1回の購入でずっと使い続けられます。",
+      "p1.h": "AI自動整理", "p1.p": "ファイル名生成・フォルダ分類をAIにおまかせ。",
+      "p2.h": "高精度OCR", "p2.p": "AIによる高精度な文字認識で、書類を正確に読み取ります。",
+      "p3.h": "透かしなしPDF", "p3.p": "Proで保存したPDFの透かしを除去。アプリ自体に広告はありません。",
+      "pro.price": "価格はストア表示（買い切り）",
+      "pro.tag": "サブスクなし",
+      "foot.name": "DocScan AI — 撮るだけ自動整理スキャナ",
+      "foot.privacy": "プライバシーポリシー",
+      "foot.note": "画面はイメージです。実際の表示と異なる場合があります。",
+      "meta.title": "DocScan AI — 撮るだけ自動整理スキャナ"
+    },
+    en: {
+      "badge": "Snap & Auto-Filing Scanner",
+      "hero.title": "Before you toss it,<br>just snap it.<br><span class=\"accent\">AI sorts it beautifully.</span>",
+      "hero.sub": "School notices, work documents, government letters. Instead of letting paper pile up, just snap and save. AI automatically organizes file names and save locations for you.",
+      "hero.cta": "Get it on Google Play",
+      "hero.more": "See Features",
+      "msg.kicker": "More than just clean PDFs",
+      "msg.title": "AI's real value isn't just clean scans.<br>It's never worrying about <span class=\"hl\" style=\"color:#8AB4F8;border-bottom:3px solid rgba(138,180,248,0.5);\">where to file things</span> again.",
+      "msg.lead": "DocScan AI is designed to quietly save everyday documents before you toss them.",
+      "sc1.emoji": "School", "sc1.h": "School Notices", "sc1.p": "Snap a handout and AI files it to \"School / Notices\" automatically.",
+      "sc2.emoji": "Work", "sc2.h": "Work Documents", "sc2.p": "Receipts, invoices, contracts. Auto-named with date and content, then saved.",
+      "sc3.emoji": "Government", "sc3.h": "Government Mail", "sc3.p": "Tax notices, certificates, official letters. Filed under \"Public\" for easy access later.",
+      "sc4.emoji": "Clean", "sc4.h": "Clean Desk", "sc4.p": "Toss the paper, keep it on your phone. Lighter desk, lighter mind.",
+      "feat.title": "What You Can Do",
+      "feat.lead": "Scan, AI organizes, find it instantly when you need it. That's it.",
+      "f1.h": "AI Auto-Organization", "f1.p": "Reads your document and suggests a clear file name (date, type, title) and save folder. No more \"IMG_0001.pdf\" mess.",
+      "f2.h": "Scan in Seconds", "f2.p": "Just point your camera for a clean, straight PDF. Multi-page supported.",
+      "f3.h": "Import from Anywhere", "f3.p": "Load photos from your gallery or existing PDFs directly.",
+      "f4.h": "Page Tools", "f4.p": "Reorder, retake, insert. Organize pages before you save.",
+      "f5.h": "Instant Search", "f5.p": "AI-classified folder structure lets you find any document in seconds.",
+      "f6.h": "Private by Design", "f6.p": "Scans stay on your device. AI analysis uses the provider you choose, managed in settings.",
+      "show.title": "How It Works",
+      "show.lead": "Snap, review the AI-suggested name and folder, save. Done.",
+      "cap1": "Camera / Gallery / PDF Import",
+      "cap2": "Multi-page Review & Edit",
+      "cap3": "AI Suggests Name & Folder",
+      "cap4": "AI-Classified Document List",
+      "cap5": "Full AI Control in Settings",
+      "steps.title": "3 Steps to Organize",
+      "st1.h": "Snap", "st1.p": "Take a photo with your camera, or import from gallery/PDF.",
+      "st2.h": "AI Organizes", "st2.p": "AI reads the document and suggests a file name and save folder.",
+      "st3.h": "Save", "st3.p": "Review and save. Toss the paper, keep it accessible on your phone.",
+      "pro.title": "One Purchase, Lifelong Access.",
+      "pro.lead": "No subscription. Buy once, use forever.",
+      "p1.h": "AI Auto-Organization", "p1.p": "Let AI handle file naming and folder classification.",
+      "p2.h": "High-Accuracy OCR", "p2.p": "AI-powered text recognition for accurate document reading.",
+      "p3.h": "Watermark-free PDFs", "p3.p": "Pro saves are watermark-free. The app itself is ad-free for everyone.",
+      "pro.price": "One-time purchase (see store for price)",
+      "pro.tag": "No subscription",
+      "foot.name": "DocScan AI — Snap & Auto-Filing Scanner",
+      "foot.privacy": "Privacy Policy",
+      "foot.note": "Screenshots are for illustration purposes only.",
+      "meta.title": "DocScan AI — Snap & Auto-Filing Scanner"
+    }
+  };
+  var IMGS = {
+    ja: {
+      shot1: { src: "screenshots/01_home.png", alt: "メイン画面" },
+      shot2: { src: "screenshots/03_preview.png", alt: "書類プレビュー" },
+      shot3: { src: "screenshots/04_ai_save.png", alt: "AI保存ダイアログ" },
+      shot4: { src: "screenshots/05_doclist.png", alt: "ドキュメント一覧" },
+      shot5: { src: "screenshots/06_settings.png", alt: "AI設定" }
+    },
+    en: {
+      shot1: { src: "screenshots_en/en_01_home.png", alt: "Home screen" },
+      shot2: { src: "screenshots_en/en_03_preview.png", alt: "Document preview" },
+      shot3: { src: "screenshots_en/en_04_ai_save.png", alt: "AI save dialog" },
+      shot4: { src: "screenshots_en/en_05_doclist.png", alt: "Document list" },
+      shot5: { src: "screenshots_en/en_06_settings.png", alt: "AI settings" }
+    }
+  };
+  function getParamLang() {
+    try {
+      var m = new URLSearchParams(window.location.search).get("lang");
+      if (m === "ja" || m === "en") return m;
+    } catch (e) {}
+    return null;
+  }
+  function getNavLang() {
+    var l = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+    return l.indexOf("ja") === 0 ? "ja" : "en";
+  }
+  function getSavedLang() {
+    try {
+      var s = localStorage.getItem("docscanai-lang");
+      if (s === "ja" || s === "en") return s;
+    } catch (e) {}
+    return null;
+  }
+  function applyLang(lang) {
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang;
+    document.title = dict["meta.title"];
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (dict[k] !== undefined) el.textContent = dict[k];
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-html");
+      if (dict[k] !== undefined) el.innerHTML = dict[k];
+    });
+    document.querySelectorAll("[data-img]").forEach(function (el) {
+      var k = el.getAttribute("data-img");
+      var cfg = (IMGS[lang] || IMGS.en)[k];
+      if (cfg) { el.src = cfg.src; el.alt = cfg.alt; }
+    });
+    document.getElementById("btn-ja").classList.toggle("active", lang === "ja");
+    document.getElementById("btn-en").classList.toggle("active", lang === "en");
+    try { localStorage.setItem("docscanai-lang", lang); } catch (e) {}
+  }
+  function currentLang() {
+    return getParamLang() || getSavedLang() || getNavLang();
+  }
+  document.getElementById("btn-ja").addEventListener("click", function () { applyLang("ja"); });
+  document.getElementById("btn-en").addEventListener("click", function () { applyLang("en"); });
+  applyLang(currentLang());
+})();
+</script>
 
 </body>
 </html>
