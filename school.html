@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学校プリント整理はスキャンしてAI分類 | DocScan AI</title>
+<meta name="description" content="学校のプリント・お知らせをスマホでスキャンしてPDF化。AIが「学校/お知らせ」フォルダへ自動分類。配布物の山から卒業。 / Scan school handouts. AI files them automatically.">
+<link rel="canonical" href="https://scandocai711.github.io/school.html">
+<style>
+  :root { --ink:#17202A; --paper:#FBF9F4; --accent:#1A73E8; --accent-dark:#0B57D0; --soft:#F0EDE3; --muted:#5F6368; --line:#DDD8CA; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--paper); color:var(--ink); line-height:1.8; }
+  .langbar { position:sticky; top:0; z-index:50; display:flex; justify-content:flex-end; padding:10px 6vw; background:rgba(251,249,244,.9); border-bottom:1px solid var(--line); }
+  .langbar button { font-weight:700; font-size:13px; border:1.5px solid var(--accent); border-radius:999px; background:transparent; color:var(--accent-dark); padding:6px 14px; margin-left:8px; cursor:pointer; }
+  .langbar button.active { background:var(--accent); color:#fff; }
+  main { max-width:820px; margin:0 auto; padding:48px 6vw 84px; }
+  h1 { font-size:clamp(26px,4vw,36px); font-weight:800; line-height:1.4; }
+  h2 { font-size:20px; margin:36px 0 10px; }
+  p, li { font-size:15px; }
+  ul, ol { margin:8px 0 8px 1.4em; }
+  a { color:var(--accent-dark); }
+  .cta { display:inline-block; margin-top:24px; background:var(--accent); color:#fff !important; font-weight:700; text-decoration:none; border-radius:12px; padding:14px 26px; }
+  .shot { margin:24px 0; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#fff; }
+  .shot img { width:100%; display:block; }
+  .back { display:inline-block; margin-top:40px; font-weight:700; }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:24px; border-top:1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<div class="langbar" role="navigation" aria-label="Language">
+  <button id="btn-ja" type="button">日本語</button>
+  <button id="btn-en" type="button">English</button>
+</div>
+
+<main>
+<div data-lang="ja">
+  <h1>学校プリントの山から卒業。撮ればAIが分類します</h1>
+  <p>配られたプリント・お知らせをスマホでスキャンしてPDF化。DocScan AIが「学校 / お知らせ」フォルダへ自動分類し、提出期限前の捜索から解放されます。</p>
+
+  <h2>こんな悩みに</h2>
+  <ul>
+    <li>ランドセルの底にクシャクシャのプリントが溜まる</li>
+    <li>提出物・集金のお知らせを見失う</li>
+    <li>きょうだい分が混ざって分からない</li>
+  </ul>
+
+  <h2>使い方(3ステップ)</h2>
+  <ol>
+    <li><strong>撮る:</strong> プリントをカメラで撮影</li>
+    <li><strong>AIが整理:</strong> 内容を読んでファイル名と「学校 / お知らせ」フォルダを自動提案</li>
+    <li><strong>保存:</strong> 確認してPDF保存。紙は捨ててOK</li>
+  </ol>
+
+  <div class="shot"><img data-img="shot" src="screenshots/01_home.png" alt="メイン画面"></div>
+
+  <h2>料金</h2>
+  <p>スキャン・PDF化は無料(透かしあり、広告なし)。AI自動整理は買い切りProで解放、サブスクはありません。</p>
+
+  <a class="cta" href="https://play.google.com/store/apps/details?id=com.docscanai">Google Play で入手</a><br>
+  <a class="back" href="index.html">← トップに戻る</a>
+</div>
+
+<div data-lang="en" style="display:none;">
+  <h1>End the school-paper pile. Snap it and AI sorts it</h1>
+  <p>Scan handouts and notices into PDFs. DocScan AI auto-files them into a "School / Notices" folder, ending the last-minute search before deadlines.</p>
+
+  <h2>For moments like</h2>
+  <ul>
+    <li>Crumpled handouts piling up at the bottom of the schoolbag</li>
+    <li>Lost permission slips and payment notices</li>
+    <li>Siblings' papers all mixed together</li>
+  </ul>
+
+  <h2>How it works (3 steps)</h2>
+  <ol>
+    <li><strong>Snap:</strong> photograph the handout</li>
+    <li><strong>AI organizes:</strong> reads the content and suggests a filename plus the school folder</li>
+    <li><strong>Save:</strong> review and save as PDF, then toss the paper</li>
+  </ol>
+
+  <div class="shot"><img data-img="shot" src="screenshots_en/en_01_home.png" alt="Home screen"></div>
+
+  <h2>Pricing</h2>
+  <p>Scanning and PDF export are free (watermarked, no ads). AI auto-organization is a one-time Pro purchase. No subscription.</p>
+
+  <a class="cta" href="https://play.google.com/store/apps/details?id=com.docscanai">Get it on Google Play</a><br>
+  <a class="back" href="index.html?lang=en">← Back to top</a>
+</div>
+</main>
+
+<footer>DocScan AI</footer>
+
+<script>
+(function () {
+  var IMGS = {
+    ja: { shot: { src: "screenshots/01_home.png", alt: "メイン画面" } },
+    en: { shot: { src: "screenshots_en/en_01_home.png", alt: "Home screen" } }
+  };
+  function getParamLang() { try { var m = new URLSearchParams(window.location.search).get("lang"); if (m === "ja" || m === "en") return m; } catch (e) {} return null; }
+  function getSavedLang() { try { var s = localStorage.getItem("docscanai-lang"); if (s === "ja" || s === "en") return s; } catch (e) {} return null; }
+  function getNavLang() { var l = (navigator.language || navigator.userLanguage || "en").toLowerCase(); return l.indexOf("ja") === 0 ? "ja" : "en"; }
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.title = lang === "ja" ? "学校プリント整理はスキャンしてAI分類 | DocScan AI" : "School handout organization with AI filing | DocScan AI";
+    document.querySelectorAll("[data-lang]").forEach(function (el) { el.style.display = el.getAttribute("data-lang") === lang ? "" : "none"; });
+    document.querySelectorAll("[data-img]").forEach(function (el) { var c = (IMGS[lang] || IMGS.en)[el.getAttribute("data-img")]; if (c) { el.src = c.src; el.alt = c.alt; } });
+    document.getElementById("btn-ja").classList.toggle("active", lang === "ja");
+    document.getElementById("btn-en").classList.toggle("active", lang === "en");
+    try { localStorage.setItem("docscanai-lang", lang); } catch (e) {}
+  }
+  document.getElementById("btn-ja").addEventListener("click", function () { applyLang("ja"); });
+  document.getElementById("btn-en").addEventListener("click", function () { applyLang("en"); });
+  applyLang(getParamLang() || getSavedLang() || getNavLang());
+})();
+</script>
+
+</body>
+</html>
