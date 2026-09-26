@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>名刺管理はスキャンしてAI整理 | DocScan AI</title>
-<meta name="description" content="名刺をスマホでスキャンしてPDF化。AIが氏名・会社名でファイル名を自動提案しフォルダ整理。名刺の束から卒業。 / Scan business cards. AI auto-names and files them.">
+<title>名刺スキャンアプリ｜名刺を撮るだけでデジタル化・AI整理 | DocScan AI</title>
+<meta name="description" content="名刺スキャンアプリ。名刺をスマホで撮るだけでPDF化し、AIが氏名・会社名でファイル名とフォルダを自動整理。名刺の束から卒業できます。無料版あり・買い切りPro・広告なし。Android対応。 / Scan business cards. AI auto-names and files them.">
 <link rel="canonical" href="https://scandocai711.github.io/business-cards.html">
 <style>
   :root { --ink:#17202A; --paper:#FBF9F4; --accent:#1A73E8; --accent-dark:#0B57D0; --soft:#F0EDE3; --muted:#5F6368; --line:#DDD8CA; }
@@ -35,10 +35,10 @@
 
 <main>
 <div data-lang="ja">
-  <h1>名刺の束から卒業。撮ればAIが整理します</h1>
+  <h1>名刺スキャンアプリ｜撮ればAIが氏名・会社名で整理</h1>
   <p>もらった名刺をスマホでスキャンしてPDF化。DocScan AIが氏名・会社名を含むファイル名を自動提案し、「名刺」フォルダへ整理します。</p>
 
-  <h2>こんな悩みに</h2>
+  <h2>名刺スキャンアプリで解決できること</h2>
   <ul>
     <li>名刺入れがパンパンで探したい1枚が見つからない</li>
     <li>展示会後の一気整理がつらい</li>
@@ -54,7 +54,7 @@
 
   <div class="shot"><img data-img="shot" src="screenshots/05_doclist.png" alt="ドキュメント一覧"></div>
 
-  <h2>料金</h2>
+  <h2>料金：無料版と買い切りPro</h2>
   <p>スキャン・PDF化は無料(透かしあり、広告なし)。AI自動整理は買い切りProで解放、サブスクはありません。</p>
 
   <a class="cta" href="https://play.google.com/store/apps/details?id=com.docscanai">Google Play で入手</a><br>
@@ -102,7 +102,7 @@
   function getNavLang() { var l = (navigator.language || navigator.userLanguage || "en").toLowerCase(); return l.indexOf("ja") === 0 ? "ja" : "en"; }
   function applyLang(lang) {
     document.documentElement.lang = lang;
-    document.title = lang === "ja" ? "名刺管理はスキャンしてAI整理 | DocScan AI" : "Business card management with AI filing | DocScan AI";
+    document.title = lang === "ja" ? "名刺スキャンアプリ｜名刺を撮るだけでデジタル化・AI整理 | DocScan AI" : "Business card scanner app with AI filing | DocScan AI";
     document.querySelectorAll("[data-lang]").forEach(function (el) { el.style.display = el.getAttribute("data-lang") === lang ? "" : "none"; });
     document.querySelectorAll("[data-img]").forEach(function (el) { var c = (IMGS[lang] || IMGS.en)[el.getAttribute("data-img")]; if (c) { el.src = c.src; el.alt = c.alt; } });
     document.getElementById("btn-ja").classList.toggle("active", lang === "ja");

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://scandocai711.github.io/sitemap.xml

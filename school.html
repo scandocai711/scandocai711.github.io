@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>学校プリント整理はスキャンしてAI分類 | DocScan AI</title>
-<meta name="description" content="学校のプリント・お知らせをスマホでスキャンしてPDF化。AIが「学校/お知らせ」フォルダへ自動分類。配布物の山から卒業。 / Scan school handouts. AI files them automatically.">
+<title>学校プリント整理アプリ｜お知らせを撮るだけでAIが自動分類 | DocScan AI</title>
+<meta name="description" content="学校のプリント・お知らせ整理アプリ。スマホで撮るだけでPDF化し、AIが「学校/お知らせ」フォルダへ自動分類。集金・提出物の見失いを防ぎます。無料版あり・買い切りPro・広告なし。Android対応。 / Scan school handouts. AI files them automatically.">
 <link rel="canonical" href="https://scandocai711.github.io/school.html">
 <style>
   :root { --ink:#17202A; --paper:#FBF9F4; --accent:#1A73E8; --accent-dark:#0B57D0; --soft:#F0EDE3; --muted:#5F6368; --line:#DDD8CA; }
@@ -35,10 +35,10 @@
 
 <main>
 <div data-lang="ja">
-  <h1>学校プリントの山から卒業。撮ればAIが分類します</h1>
+  <h1>学校プリント整理アプリ｜撮ればAIが「学校 / お知らせ」に分類</h1>
   <p>配られたプリント・お知らせをスマホでスキャンしてPDF化。DocScan AIが「学校 / お知らせ」フォルダへ自動分類し、提出期限前の捜索から解放されます。</p>
 
-  <h2>こんな悩みに</h2>
+  <h2>学校プリント整理アプリで解決できること</h2>
   <ul>
     <li>ランドセルの底にクシャクシャのプリントが溜まる</li>
     <li>提出物・集金のお知らせを見失う</li>
@@ -54,7 +54,7 @@
 
   <div class="shot"><img data-img="shot" src="screenshots/01_home.png" alt="メイン画面"></div>
 
-  <h2>料金</h2>
+  <h2>料金：無料版と買い切りPro</h2>
   <p>スキャン・PDF化は無料(透かしあり、広告なし)。AI自動整理は買い切りProで解放、サブスクはありません。</p>
 
   <a class="cta" href="https://play.google.com/store/apps/details?id=com.docscanai">Google Play で入手</a>
@@ -103,7 +103,7 @@
   function getNavLang() { var l = (navigator.language || navigator.userLanguage || "en").toLowerCase(); return l.indexOf("ja") === 0 ? "ja" : "en"; }
   function applyLang(lang) {
     document.documentElement.lang = lang;
-    document.title = lang === "ja" ? "学校プリント整理はスキャンしてAI分類 | DocScan AI" : "School handout organization with AI filing | DocScan AI";
+    document.title = lang === "ja" ? "学校プリント整理アプリ｜お知らせを撮るだけでAIが自動分類 | DocScan AI" : "School handout organizer app with AI filing | DocScan AI";
     document.querySelectorAll("[data-lang]").forEach(function (el) { el.style.display = el.getAttribute("data-lang") === lang ? "" : "none"; });
     document.querySelectorAll("[data-img]").forEach(function (el) { var c = (IMGS[lang] || IMGS.en)[el.getAttribute("data-img")]; if (c) { el.src = c.src; el.alt = c.alt; } });
     document.getElementById("btn-ja").classList.toggle("active", lang === "ja");
