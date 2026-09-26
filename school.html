@@ -53,6 +53,7 @@
   </ol>
 
   <div class="shot"><img data-img="shot" src="screenshots/01_home.png" alt="メイン画面"></div>
+  <div class="shot"><img data-img="shot2" src="screenshots/04_ai_save_school.png" alt="AI保存ダイアログ（学校プリント）"></div>
 
   <h2>料金：無料版と買い切りPro</h2>
   <p>スキャン・PDF化は無料(透かしあり、広告なし)。AI自動整理は買い切りProで解放、サブスクはありません。</p>
@@ -81,6 +82,7 @@
   </ol>
 
   <div class="shot"><img data-img="shot" src="screenshots_en/en_01_home.png" alt="Home screen"></div>
+  <div class="shot"><img data-img="shot2" src="screenshots_en/en_04_ai_save.png" alt="AI save dialog"></div>
 
   <h2>Pricing</h2>
   <p>Scanning and PDF export are free (watermarked, no ads). AI auto-organization is a one-time Pro purchase. No subscription.</p>
@@ -95,8 +97,10 @@
 <script>
 (function () {
   var IMGS = {
-    ja: { shot: { src: "screenshots/01_home.png", alt: "メイン画面" } },
-    en: { shot: { src: "screenshots_en/en_01_home.png", alt: "Home screen" } }
+    ja: { shot: { src: "screenshots/01_home.png", alt: "メイン画面" },
+          shot2: { src: "screenshots/04_ai_save_school.png", alt: "AI保存ダイアログ（学校プリント）" } },
+    en: { shot: { src: "screenshots_en/en_01_home.png", alt: "Home screen" },
+          shot2: { src: "screenshots_en/en_04_ai_save.png", alt: "AI save dialog" } }
   };
   function getParamLang() { try { var m = new URLSearchParams(window.location.search).get("lang"); if (m === "ja" || m === "en") return m; } catch (e) {} return null; }
   function getSavedLang() { try { var s = localStorage.getItem("docscanai-lang"); if (s === "ja" || s === "en") return s; } catch (e) {} return null; }
