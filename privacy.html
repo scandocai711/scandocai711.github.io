@@ -41,6 +41,7 @@
   h2 { font-size: 20px; margin: 36px 0 10px; }
   p, li { font-size: 15px; }
   ul { margin: 8px 0 8px 1.4em; }
+  li { margin-bottom: 6px; }
   a { color: var(--accent-dark); }
   .back { display: inline-block; margin-top: 40px; font-weight: 700; }
   footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
@@ -56,27 +57,33 @@
 <main>
 <div data-lang="ja">
   <h1>プライバシーポリシー</h1>
-  <p class="date">施行日: 2026年9月9日 / アプリ: DocScan AI (Android, com.docscanai)</p>
+  <p class="date">施行日: 2026年9月9日(改定: 2026年10月3日) / アプリ: DocScan AI (Android, com.docscanai)</p>
 
   <h2>1. 基本方針</h2>
-  <p>DocScan AI(以下「本アプリ」)は、スキャンした書類を端末内および利用者が指定した保存先フォルダに保存することを基本とし、開発者が書類内容を収集・閲覧することはありません。</p>
+  <p>DocScan AI(以下「本アプリ」)は、スキャンした書類を端末内および利用者が指定した保存先フォルダに保存することを基本とし、開発者が書類内容を保存・閲覧することはありません。ただしAI自動整理を利用した場合の送信は第3項に記載します。</p>
 
   <h2>2. 端末内に保存される情報</h2>
   <ul>
-    <li>スキャン画像・生成PDF: 端末内または利用者が選択したフォルダに保存されます。開発者のサーバーには送信されません。</li>
+    <li>スキャン画像・生成PDF: 端末内または利用者が選択したフォルダに保存されます。開発者がこれらの内容を保存・閲覧することはありません。AI自動整理を利用した場合は、第3項のとおりOCRテキストが送信されます。</li>
     <li>APIキー・アプリ設定: 利用者が入力した各AIプロバイダのAPIキーや設定は端末内のみに保存されます。</li>
     <li>購入状態・体験パス等の利用状態フラグ: 端末内に保存されます。</li>
   </ul>
 
-  <h2>3. AI分析のための送信</h2>
-  <p>AI自動整理(ファイル名提案・フォルダ分類・OCR)を利用する場合、書類画像(JPEG圧縮)およびOCRテキストが、利用者自身が設定で選択したAIプロバイダ(Gemini / NVIDIA NIM / OpenAI / OpenRouter / OpenCode等)に送信されます。送信先の取扱いは各プロバイダのプライバシーポリシーが適用されます。端末内推論(Gemini Nano)を選択した場合は外部送信されません。</p>
+  <h2>3. AI自動整理のための送信</h2>
+  <p>AI自動整理(ファイル名提案・フォルダ分類・OCR)を利用した場合、次のとおり送信されます。送信内容は処理のために一時的に送られるもので、開発者のサーバーには保存されません(送信先プロバイダでの取扱いは各社のプライバシーポリシーに従います)。</p>
+  <ul>
+    <li><strong>Free AI(初期設定・APIキー不要):</strong> OCRテキスト(およびフォルダ構成・日付)が、<strong>開発者が運用するリレーサーバー(Google Cloud Functions)</strong>に送信され、<strong>開発者が選定した上流プロバイダ(NVIDIA NIM / OpenRouter)</strong>へ転送されます。送信先は利用者が選択するものではありません。端末を識別するUUIDと1日あたりの利用回数のみが、開発者のデータベース(Cloud Firestore)に保存されます。</li>
+    <li><strong>利用者がAPIキーを設定したプロバイダ(Gemini / NVIDIA NIM / OpenAI / OpenRouter / OpenCode等):</strong> 書類画像(画像対応モデルの場合はJPEG圧縮)およびOCRテキストが、利用者が選択したプロバイダへ直接送信されます。</li>
+    <li><strong>端末内推論(Gemini Nano):</strong> 外部送信はありません。</li>
+  </ul>
 
   <h2>4. Firebaseの利用</h2>
-  <p>品質改善のため、以下のFirebaseサービスを利用しています。</p>
+  <p>品質改善および機能提供のため、以下のFirebaseサービスを利用しています。</p>
   <ul>
     <li>Firebase Analytics: アプリ起動・スキャン・PDF生成等の利用統計(ファイル名等の個人情報は送信しません。ファイル名は拡張子のみ記録します)。</li>
+    <li>Firebase Crashlytics: クラッシュ・不具合の診断情報。</li>
     <li>Firebase Remote Config: AIモデル選択肢等の設定配信。</li>
-    <li>Cloud Firestore: 紹介コードの照合(紹介機能利用時のみ)。</li>
+    <li>Cloud Firestore: 紹介コードの照合と紹介実績の重複防止(紹介機能を利用した場合のみ。このとき端末識別子(Android ID)を保存します)。またFree AIの1日あたりの利用回数を端末UUIDとともに保存します。</li>
   </ul>
   <p>これらはGoogleのプライバシーポリシー(<a href="https://policies.google.com/privacy">policies.google.com/privacy</a>)に従って処理されます。</p>
 
@@ -84,7 +91,7 @@
   <p>Pro購入はGoogle Play課金を通じて処理され、決済情報はGoogleが取り扱います。開発者はクレジットカード番号等を取得しません。</p>
 
   <h2>6. 広告</h2>
-  <p>本アプリに広告SDKは含まれていません。広告目的のトラッキングは行いません。</p>
+  <p>本アプリに広告SDKは含まれていません。広告目的のトラッキングは行わず、広告ID(Advertising ID)も収集しません。</p>
 
   <h2>7. 権限の利用</h2>
   <ul>
@@ -107,27 +114,33 @@
 
 <div data-lang="en" style="display:none;">
   <h1>Privacy Policy</h1>
-  <p class="date">Effective: September 9, 2026 / App: DocScan AI (Android, com.docscanai)</p>
+  <p class="date">Effective: September 9, 2026 (updated October 3, 2026) / App: DocScan AI (Android, com.docscanai)</p>
 
   <h2>1. Basics</h2>
-  <p>DocScan AI (the "App") stores scanned documents on your device and in folders you choose. The developer does not collect or view your document contents.</p>
+  <p>DocScan AI (the "App") stores scanned documents on your device and in folders you choose. The developer does not store or view your document contents. Transmissions made when you use AI auto-organization are described in Section 3.</p>
 
   <h2>2. Data kept on your device</h2>
   <ul>
-    <li>Scanned images and generated PDFs: stored on your device or in a folder you select. They are never sent to the developer's servers.</li>
+    <li>Scanned images and generated PDFs: stored on your device or in a folder you select. The developer does not store or view their contents. If you use AI auto-organization, OCR text is transmitted as described in Section 3.</li>
     <li>API keys and app settings: AI provider API keys you enter and settings are stored only on your device.</li>
     <li>Purchase state and trial-pass flags: stored on your device.</li>
   </ul>
 
   <h2>3. Transmission for AI analysis</h2>
-  <p>When you use AI auto-organization (file-name suggestions, folder classification, OCR), document images (JPEG-compressed) and OCR text are sent to the AI provider you selected in Settings (Gemini / NVIDIA NIM / OpenAI / OpenRouter / OpenCode, etc.). Each provider's own privacy policy applies. On-device inference (Gemini Nano) sends nothing externally.</p>
+  <p>When you use AI auto-organization (file-name suggestions, folder classification, OCR), data is transmitted as follows. The transmitted content is sent only for processing and is not stored on the developer's servers (how each destination provider handles it is governed by that provider's policy).</p>
+  <ul>
+    <li><strong>Free AI (default, no API key required):</strong> OCR text (together with your folder structure and dates) is sent to a <strong>relay server operated by the developer (Google Cloud Functions)</strong> and forwarded to <strong>upstream providers selected by the developer (NVIDIA NIM / OpenRouter)</strong>. The destinations are not chosen by you. Only a device identifier (UUID) and your daily usage count are stored in the developer's database (Cloud Firestore).</li>
+    <li><strong>Providers where you supply your own API key (Gemini / NVIDIA NIM / OpenAI / OpenRouter / OpenCode, etc.):</strong> document images (JPEG-compressed, for image-capable models) and OCR text are sent directly to the provider you selected.</li>
+    <li><strong>On-device inference (Gemini Nano):</strong> nothing is sent externally.</li>
+  </ul>
 
   <h2>4. Firebase</h2>
-  <p>We use the following Firebase services for quality improvement:</p>
+  <p>We use the following Firebase services to improve quality and provide features:</p>
   <ul>
     <li>Firebase Analytics: usage statistics such as app opens, scans, and PDF generation (no personal data; file names are logged as extensions only).</li>
+    <li>Firebase Crashlytics: crash and error diagnostics.</li>
     <li>Firebase Remote Config: delivery of settings such as AI model options.</li>
-    <li>Cloud Firestore: referral-code verification (only when you use the referral feature).</li>
+    <li>Cloud Firestore: referral-code verification and prevention of duplicate referral counting (only when you use the referral feature; a device identifier (Android ID) is stored for this purpose). The daily Free AI usage count is also stored together with a device UUID.</li>
   </ul>
   <p>These are processed under Google's Privacy Policy (<a href="https://policies.google.com/privacy">policies.google.com/privacy</a>).</p>
 
@@ -135,7 +148,7 @@
   <p>Pro purchases are processed through Google Play Billing. Payment details are handled by Google; the developer never receives credit-card numbers.</p>
 
   <h2>6. Ads</h2>
-  <p>The App contains no advertising SDKs and performs no advertising tracking.</p>
+  <p>The App contains no advertising SDKs, performs no advertising tracking, and does not collect the Advertising ID.</p>
 
   <h2>7. Permissions</h2>
   <ul>
