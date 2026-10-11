@@ -6,61 +6,91 @@
 <title>Privacy Policy — DocScan AI</title>
 <meta name="description" content="DocScan AI privacy policy / プライバシーポリシー">
 <style>
+  /* Design system: material (Open Design) — tokens applied verbatim. */
   :root {
-    --ink: #17202A;
-    --paper: #FBF9F4;
-    --accent: #1A73E8;
-    --accent-dark: #0B57D0;
-    --muted: #5F6368;
-    --line: #DDD8CA;
+    --bg: #f8fafd; --surface: #ffffff; --surface-warm: #e8f0fe;
+    --fg: #202124; --fg-2: #3c4043; --muted: #5f6368; --meta: #1a73e8;
+    --border: #dadce0; --border-soft: #edf0f2;
+    --accent: #1a73e8; --accent-on: #ffffff;
+    --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+    --font-display: "Google Sans", Roboto, Arial, sans-serif;
+    --font-body: Roboto, Arial, sans-serif;
+    --text-xs: 12px; --text-sm: 14px; --text-base: 16px; --text-lg: 18px; --text-xl: 24px;
+    --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-12: 48px;
+    --radius-md: 12px; --radius-pill: 9999px;
+    --elev-ring: 0 0 0 1px var(--border);
+    --container-max: 1200px;
+    --container-gutter-desktop: 36px; --container-gutter-tablet: 24px; --container-gutter-phone: 16px;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    line-height: 1.8;
-  }
-  .langbar {
-    position: sticky; top: 0; z-index: 50;
-    display: flex; justify-content: flex-end;
-    padding: 10px 6vw;
-    background: rgba(251,249,244,0.9);
-    border-bottom: 1px solid var(--line);
-  }
-  .langbar button {
-    font-weight: 700; font-size: 13px;
-    border: 1.5px solid var(--accent); border-radius: 999px;
-    background: transparent; color: var(--accent-dark);
-    padding: 6px 14px; margin-left: 8px; cursor: pointer;
-  }
-  .langbar button.active { background: var(--accent); color: #fff; }
-  main { max-width: 820px; margin: 0 auto; padding: 48px 6vw 84px; }
-  h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; }
-  .date { margin-top: 8px; color: var(--muted); font-size: 14px; }
-  h2 { font-size: 20px; margin: 36px 0 10px; }
-  p, li { font-size: 15px; }
-  ul { margin: 8px 0 8px 1.4em; }
-  li { margin-bottom: 6px; }
-  a { color: var(--accent-dark); }
-  .back { display: inline-block; margin-top: 40px; font-weight: 700; }
-  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body);
+    font-size: var(--text-base); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { margin: 0; font-family: var(--font-display); line-height: 1.3; }
+  p { margin: 0; }
+  a { color: var(--accent); }
+
+  .container { max-width: var(--container-max); margin-inline: auto; padding-inline: var(--container-gutter-desktop); }
+  @media (max-width: 1023px) { .container { padding-inline: var(--container-gutter-tablet); } }
+  @media (max-width: 639px) { .container { padding-inline: var(--container-gutter-phone); } }
+
+  header.site { position: sticky; top: 0; z-index: 30; background: color-mix(in oklab, var(--surface), transparent 6%);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .nav { display: flex; align-items: center; gap: var(--space-4); min-height: 64px; }
+  .brand { display: flex; align-items: center; gap: var(--space-3); font: 700 var(--text-lg)/1 var(--font-display); color: var(--fg); text-decoration: none; white-space: nowrap; }
+  .brand .logo { width: 32px; height: 32px; border-radius: 8px; box-shadow: var(--elev-ring); }
+  .nav-spacer { flex: 1; }
+  .lang { display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-pill); overflow: hidden; flex: none; }
+  .lang button { border: 0; background: var(--surface); color: var(--muted); font: 700 var(--text-xs)/1 var(--font-body); padding: 8px 12px; cursor: pointer; white-space: nowrap; }
+  .lang button.active { background: var(--accent); color: var(--accent-on); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 var(--space-5);
+    border: 1px solid transparent; border-radius: var(--radius-pill); font: 700 var(--text-sm)/1 var(--font-body);
+    color: inherit; text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color .15s ease, transform .15s ease; }
+  .btn-primary { background: var(--accent); color: var(--accent-on); }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn-sm { min-height: 38px; padding: 0 var(--space-4); }
+  @media (max-width: 420px) { .brand span { display: none; } }
+
+  .article { max-width: 820px; padding-block: 48px 72px; }
+  .article h1 { font-size: clamp(26px, 4vw, 36px); }
+  .article h2 { font-size: var(--text-xl); margin-top: var(--space-12); }
+  .article p, .article li { font-size: 15px; }
+  .article ul { margin: 8px 0 8px 1.4em; }
+  .article li { margin-bottom: 6px; }
+  .date { margin-top: var(--space-4); color: var(--muted); font-size: var(--text-sm); }
+  .back { display: inline-block; margin-top: var(--space-12); font-weight: 700; text-decoration: none; }
+
+  footer { border-top: 1px solid var(--border); background: var(--surface); }
+  footer .container { padding-block: var(--space-8); color: var(--muted); font-size: var(--text-sm);
+    display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: space-between; align-items: center; }
+  footer a { color: var(--meta); font-weight: 700; text-decoration: none; }
+  footer .links { display: flex; gap: var(--space-5); flex-wrap: wrap; }
 </style>
 </head>
 <body>
 
-<div class="langbar" role="navigation" aria-label="Language">
-  <button id="btn-ja" type="button">日本語</button>
-  <button id="btn-en" type="button">English</button>
-</div>
+<header class="site">
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#1a73e8"/><path d="M11.5 8h6.1c4.7 0 7.7 3.2 7.7 8s-3 8-7.7 8h-6.1V8zm4.2 3.4v9.2h1.4c2.3 0 3.8-1.7 3.8-4.6s-1.5-4.6-3.8-4.6h-1.4z" fill="#fff"/></svg>
+      <span>DocScan AI</span>
+    </a>
+    <div class="nav-spacer"></div>
+    <div class="lang" role="group" aria-label="Language">
+      <button id="btn-ja" type="button">日本語</button>
+      <button id="btn-en" type="button">English</button>
+    </div>
+    <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.docscanai">Google Play</a>
+  </div>
+</header>
 
-<main>
+<main class="container article">
 <div data-lang="ja">
   <h1>プライバシーポリシー</h1>
-  <p class="date">施行日: 2026年9月9日(改定: 2026年10月3日) / アプリ: DocScan AI (Android, com.docscanai)</p>
+  <p class="date">施行日: 2026年9月9日（改定: 2026年10月3日） / アプリ: DocScan AI (Android, com.docscanai)</p>
 
   <h2>1. 基本方針</h2>
-  <p>DocScan AI(以下「本アプリ」)は、スキャンした書類を端末内および利用者が指定した保存先フォルダに保存することを基本とし、開発者が書類内容を保存・閲覧することはありません。ただしAI自動整理を利用した場合の送信は第3項に記載します。</p>
+  <p>DocScan AI（以下「本アプリ」）は、スキャンした書類を端末内および利用者が指定した保存先フォルダに保存することを基本とし、開発者が書類内容を保存・閲覧することはありません。ただしAI自動整理を利用した場合の送信は第3項に記載します。</p>
 
   <h2>2. 端末内に保存される情報</h2>
   <ul>
@@ -70,28 +100,28 @@
   </ul>
 
   <h2>3. AI自動整理のための送信</h2>
-  <p>AI自動整理(ファイル名提案・フォルダ分類・OCR)を利用した場合、次のとおり送信されます。送信内容は処理のために一時的に送られるもので、開発者のサーバーには保存されません(送信先プロバイダでの取扱いは各社のプライバシーポリシーに従います)。</p>
+  <p>AI自動整理（ファイル名提案・フォルダ分類・OCR）を利用した場合、次のとおり送信されます。送信内容は処理のために一時的に送られるもので、開発者のサーバーには保存されません（送信先プロバイダでの取扱いは各社のプライバシーポリシーに従います）。</p>
   <ul>
-    <li><strong>Free AI(初期設定・APIキー不要):</strong> OCRテキスト(およびフォルダ構成・日付)が、<strong>開発者が運用するリレーサーバー(Google Cloud Functions)</strong>に送信され、<strong>開発者が選定した上流プロバイダ(NVIDIA NIM / OpenRouter)</strong>へ転送されます。送信先は利用者が選択するものではありません。端末を識別するUUIDと1日あたりの利用回数のみが、開発者のデータベース(Cloud Firestore)に保存されます。</li>
-    <li><strong>利用者がAPIキーを設定したプロバイダ(Gemini / NVIDIA NIM / OpenAI / OpenRouter / OpenCode等):</strong> 書類画像(画像対応モデルの場合はJPEG圧縮)およびOCRテキストが、利用者が選択したプロバイダへ直接送信されます。</li>
-    <li><strong>端末内推論(Gemini Nano):</strong> 外部送信はありません。</li>
+    <li><strong>Free AI（初期設定・APIキー不要）:</strong> OCRテキスト（およびフォルダ構成・日付）が、<strong>開発者が運用するリレーサーバー（Google Cloud Functions）</strong>に送信され、<strong>開発者が選定した上流プロバイダ（NVIDIA NIM / OpenRouter）</strong>へ転送されます。送信先は利用者が選択するものではありません。端末を識別するUUIDと1日あたりの利用回数のみが、開発者のデータベース（Cloud Firestore）に保存されます。</li>
+    <li><strong>利用者がAPIキーを設定したプロバイダ（Gemini / NVIDIA NIM / OpenAI / OpenRouter / OpenCode等）:</strong> 書類画像（画像対応モデルの場合はJPEG圧縮）およびOCRテキストが、利用者が選択したプロバイダへ直接送信されます。</li>
+    <li><strong>端末内推論（Gemini Nano）:</strong> 外部送信はありません。</li>
   </ul>
 
   <h2>4. Firebaseの利用</h2>
   <p>品質改善および機能提供のため、以下のFirebaseサービスを利用しています。</p>
   <ul>
-    <li>Firebase Analytics: アプリ起動・スキャン・PDF生成等の利用統計(ファイル名等の個人情報は送信しません。ファイル名は拡張子のみ記録します)。</li>
+    <li>Firebase Analytics: アプリ起動・スキャン・PDF生成等の利用統計（ファイル名等の個人情報は送信しません。ファイル名は拡張子のみ記録します）。</li>
     <li>Firebase Crashlytics: クラッシュ・不具合の診断情報。</li>
     <li>Firebase Remote Config: AIモデル選択肢等の設定配信。</li>
-    <li>Cloud Firestore: 紹介コードの照合と紹介実績の重複防止(紹介機能を利用した場合のみ。このとき端末識別子(Android ID)を保存します)。またFree AIの1日あたりの利用回数を端末UUIDとともに保存します。</li>
+    <li>Cloud Firestore: 紹介コードの照合と紹介実績の重複防止（紹介機能を利用した場合のみ。このとき端末識別子（Android ID）を保存します）。またFree AIの1日あたりの利用回数を端末UUIDとともに保存します。</li>
   </ul>
-  <p>これらはGoogleのプライバシーポリシー(<a href="https://policies.google.com/privacy">policies.google.com/privacy</a>)に従って処理されます。</p>
+  <p>これらはGoogleのプライバシーポリシー（<a href="https://policies.google.com/privacy">policies.google.com/privacy</a>）に従って処理されます。</p>
 
   <h2>5. 課金</h2>
   <p>Pro購入はGoogle Play課金を通じて処理され、決済情報はGoogleが取り扱います。開発者はクレジットカード番号等を取得しません。</p>
 
   <h2>6. 広告</h2>
-  <p>本アプリに広告SDKは含まれていません。広告目的のトラッキングは行わず、広告ID(Advertising ID)も収集しません。</p>
+  <p>本アプリに広告SDKは含まれていません。広告目的のトラッキングは行わず、広告ID（Advertising ID）も収集しません。</p>
 
   <h2>7. 権限の利用</h2>
   <ul>
@@ -170,7 +200,15 @@
 </div>
 </main>
 
-<footer>DocScan AI</footer>
+<footer>
+  <div class="container">
+    <span>DocScan AI</span>
+    <div class="links">
+      <a href="index.html" data-i18n-swap>トップ</a>
+      <a href="https://github.com/scandocai711">GitHub</a>
+    </div>
+  </div>
+</footer>
 
 <script>
 (function () {
@@ -198,6 +236,7 @@
     document.querySelectorAll("[data-lang]").forEach(function (el) {
       el.style.display = el.getAttribute("data-lang") === lang ? "" : "none";
     });
+    document.querySelectorAll("[data-i18n-swap]").forEach(function (el) { el.textContent = lang === "ja" ? "トップ" : "Home"; });
     document.getElementById("btn-ja").classList.toggle("active", lang === "ja");
     document.getElementById("btn-en").classList.toggle("active", lang === "en");
     try { localStorage.setItem("docscanai-lang", lang); } catch (e) {}
