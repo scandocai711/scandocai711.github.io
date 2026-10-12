@@ -199,6 +199,22 @@
   .plan li::before { content: "\2713"; color: var(--success); font-weight: 700; }
   .plan .tag { display: inline-block; margin-bottom: var(--space-3); padding: 4px 10px; border-radius: var(--radius-pill); background: var(--surface-warm); color: var(--accent); font: 700 var(--text-xs)/1 var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
 
+  /* Compare table */
+  .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table.cmp { width: 100%; min-width: 620px; border: 1px solid var(--border); border-radius: var(--radius-md);
+    border-collapse: separate; border-spacing: 0; overflow: hidden; background: var(--surface); }
+  table.cmp th, table.cmp td { padding: 12px 14px; border-bottom: 1px solid var(--border-soft); font-size: var(--text-sm); text-align: center; vertical-align: middle; }
+  table.cmp thead th { background: var(--bg); color: var(--muted); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; }
+  table.cmp tbody th { min-width: 160px; text-align: left; font-weight: 500; color: var(--fg-2); }
+  table.cmp tr:last-child th, table.cmp tr:last-child td { border-bottom: 0; }
+  table.cmp .ours { background: var(--surface-warm); }
+  table.cmp thead th.ours { color: var(--accent); }
+  table.cmp td.ours { font-weight: 700; }
+  .cmp-yes { color: var(--success); font-weight: 700; }
+  .cmp-part { color: var(--warn); font-weight: 700; }
+  .cmp-no { color: var(--danger); font-weight: 700; }
+  .cmp-note { margin-top: var(--space-4); color: var(--muted); font-size: var(--text-xs); }
+
   .faq { max-width: 860px; margin-inline: auto; }
   details { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); padding: var(--space-5); }
   details + details { margin-top: var(--space-3); }
@@ -229,6 +245,7 @@
       <a href="#features" data-i18n="nav.features">機能</a>
       <a href="#how" data-i18n="nav.how">使い方</a>
       <a href="#shots" data-i18n="nav.shots">画面</a>
+      <a href="#compare" data-i18n="nav.compare">比較</a>
       <a href="#pricing" data-i18n="nav.pricing">料金</a>
       <a href="#faq" data-i18n="nav.faq">よくある質問</a>
     </nav>
@@ -390,6 +407,23 @@
     </div>
   </section>
 
+  <section id="compare">
+    <div class="container">
+      <div class="section-head center stack">
+        <p class="eyebrow" data-i18n="compare.eyebrow">COMPARE</p>
+        <h2 data-i18n="compare.title">他社アプリとの違い</h2>
+        <p class="lead" data-i18n="compare.lead">スキャンして終わりではなく、保存したあとまで。編集・検索・整理までアプリ内で完結します。</p>
+      </div>
+      <div class="cmp-scroll">
+        <table class="cmp">
+          <thead data-i18n-html="compare.cols"><tr><th scope='col'></th><th scope='col'>Files by Google</th><th scope='col'>Google Drive</th><th scope='col'>Adobe Scan</th><th scope='col' class='ours'>DocScanAI</th></tr></thead>
+          <tbody data-i18n-html="compare.rows"><tr><th scope='row'>PDFの閲覧・共有</th><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>手書きの注釈（ペン・蛍光マーカー）</th><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>テキストの追記</th><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>署名・捺印</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>ページの削除・回転・並べ替え</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>PDFの分割・結合</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>検索可能PDF（OCRテキスト埋め込み）</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>AIによる自動ファイル命名</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>AIによる自動フォルダ分類</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>アカウント登録なし・クラウドなし</th><td class='cmp-yes'>○</td><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes ours'>○</td></tr></tbody>
+        </table>
+      </div>
+      <p class="cmp-note" data-i18n="compare.note">○=標準対応、△=一部対応（有料プランや他社アプリ経由を含む）、✗=非対応。2026年10月時点のAndroidアプリの公開情報にもとづく比較です。Adobe Scanの結合・形式変換・テキスト編集はAcrobat Pro（有料）が必要です。Google Driveの整理機能の一部はGemini連携やWorkspace契約が必要です。DocScanAIの署名は署名画像の押印であり、電子署名法上の電子署名ではありません。</p>
+    </div>
+  </section>
+
   <section id="pricing">
     <div class="container">
       <div class="section-head center stack">
@@ -444,7 +478,7 @@
 (function () {
   var I18N = {
     ja: {
-      "nav.features": "機能", "nav.how": "使い方", "nav.shots": "画面", "nav.pricing": "料金", "nav.faq": "よくある質問",
+      "nav.features": "機能", "nav.how": "使い方", "nav.shots": "画面", "nav.compare": "比較", "nav.pricing": "料金", "nav.faq": "よくある質問",
       "hero.eyebrow": "撮るだけ自動整理スキャナ",
       "hero.title": "捨てる前に、<br>さっと撮る。<br><span class=\"accent\">AIがきれいに整理。</span>",
       "hero.sub": "学校のお知らせ、仕事の書類、役所からの通知。紙を溜める代わりに、撮って保存するだけ。AIがファイル名と保存先を自動で整理します。",
@@ -481,12 +515,17 @@
       "faq.q1": "無料でどこまで使えますか？", "faq.a1": "スキャン・PDF化・一覧の閲覧は無料です。PDFに透かしは入らず、広告も表示されません。AI自動整理と検索可能PDFがProの対象です。",
       "faq.q2": "Proと無料版の違いは？", "faq.a2": "Proは買い切りです。AIによるファイル名・保存先の自動提案と高精度OCR、OCRテキストを埋め込んだ検索可能PDFが使えます。サブスクはありません。",
       "faq.q3": "書類の中身はどこかへ送信されますか？", "faq.a3": "スキャン画像は端末内に保存され、開発者が内容を見ることはありません。AI自動整理を使うときだけ、選んだプロバイダへOCRテキスト（画像対応モデルでは画像）が送信されます。",
+      "compare.eyebrow": "COMPARE", "compare.title": "他社アプリとの違い",
+      "compare.lead": "スキャンして終わりではなく、保存したあとまで。編集・検索・整理までアプリ内で完結します。",
+      "compare.cols": "<tr><th scope='col'></th><th scope='col'>Files by Google</th><th scope='col'>Google Drive</th><th scope='col'>Adobe Scan</th><th scope='col' class='ours'>DocScanAI</th></tr>",
+      "compare.rows": "<tr><th scope='row'>PDFの閲覧・共有</th><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>手書きの注釈（ペン・蛍光マーカー）</th><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>テキストの追記</th><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>署名・捺印</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>ページの削除・回転・並べ替え</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>PDFの分割・結合</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>検索可能PDF（OCRテキスト埋め込み）</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>AIによる自動ファイル命名</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>AIによる自動フォルダ分類</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>アカウント登録なし・クラウドなし</th><td class='cmp-yes'>○</td><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes ours'>○</td></tr>",
+      "compare.note": "○=標準対応、△=一部対応（有料プランや他社アプリ経由を含む）、✗=非対応。2026年10月時点のAndroidアプリの公開情報にもとづく比較です。Adobe Scanの結合・形式変換・テキスト編集はAcrobat Pro（有料）が必要です。Google Driveの整理機能の一部はGemini連携やWorkspace契約が必要です。DocScanAIの署名は署名画像の押印であり、電子署名法上の電子署名ではありません。",
       "foot.name": "DocScan AI — 撮るだけ自動整理スキャナ", "foot.privacy": "プライバシーポリシー",
       "foot.note": "画面はイメージです。実際の表示と異なる場合があります。",
       "meta.title": "DocScan AI｜書類・レシートを撮るだけでPDF化・AI自動整理スキャナー"
     },
     en: {
-      "nav.features": "Features", "nav.how": "How it works", "nav.shots": "Screens", "nav.pricing": "Pricing", "nav.faq": "FAQ",
+      "nav.features": "Features", "nav.how": "How it works", "nav.shots": "Screens", "nav.compare": "Compare", "nav.pricing": "Pricing", "nav.faq": "FAQ",
       "hero.eyebrow": "Snap & Auto-Filing Scanner",
       "hero.title": "Before you toss it,<br>just snap it.<br><span class=\"accent\">AI sorts it beautifully.</span>",
       "hero.sub": "School notices, work documents, government letters. Instead of letting paper pile up, just snap and save. AI automatically organizes file names and save locations for you.",
@@ -523,6 +562,11 @@
       "faq.q1": "How much can I do for free?", "faq.a1": "Scanning, PDF export and browsing your list are free. PDFs have no watermark and there are no ads. AI auto-filing and searchable PDFs are Pro features.",
       "faq.q2": "What is the difference between Free and Pro?", "faq.a2": "Pro is a one-time purchase. It adds AI file-name and folder suggestions, high-accuracy OCR, and searchable PDFs with embedded OCR text. There is no subscription.",
       "faq.q3": "Is my document sent anywhere?", "faq.a3": "Scans stay on your device; the developer never views them. Only when you use AI auto-organization is OCR text (and images, for image-capable models) sent to the provider you chose.",
+      "compare.eyebrow": "COMPARE", "compare.title": "How it compares",
+      "compare.lead": "It does not stop at scanning. Edit, search and file your PDFs without leaving the app.",
+      "compare.cols": "<tr><th scope='col'></th><th scope='col'>Files by Google</th><th scope='col'>Google Drive</th><th scope='col'>Adobe Scan</th><th scope='col' class='ours'>DocScanAI</th></tr>",
+      "compare.rows": "<tr><th scope='row'>View & share PDFs</th><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>Handwritten annotation (pen, highlighter)</th><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>Add text</th><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>Signature / stamp</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>Delete, rotate & reorder pages</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>Split & merge PDFs</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-part'>△</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>Searchable PDF (embedded OCR text)</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>AI auto file naming</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes'>○</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>AI auto folder filing</th><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes ours'>○</td></tr><tr><th scope='row'>No account, no cloud required</th><td class='cmp-yes'>○</td><td class='cmp-no'>✗</td><td class='cmp-no'>✗</td><td class='cmp-yes ours'>○</td></tr>",
+      "compare.note": "○ = supported, △ = partial (including paid plans or via another app), ✗ = not supported. Based on publicly available information for the Android apps as of October 2026. Adobe Scan requires paid Acrobat Pro for merging, format conversion and text editing. Some Google Drive organization features require Gemini/Workspace. DocScanAI's signature is a stamped signature image — not an electronic signature under Japan's Electronic Signature Act.",
       "foot.name": "DocScan AI — Snap & Auto-Filing Scanner", "foot.privacy": "Privacy Policy",
       "foot.note": "Screenshots are for illustration purposes only.",
       "meta.title": "DocScan AI — Snap & Auto-Filing Scanner"
